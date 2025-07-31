@@ -15,8 +15,6 @@ jobs:
 
     steps:
       - name: Release Please
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         with:
-          release-type: simple
-          default-branch: ${{ github.ref == 'refs/heads/main' && 'main' || 'staging' }}
-          prerelease: ${{ github.ref == 'refs/heads/staging' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
