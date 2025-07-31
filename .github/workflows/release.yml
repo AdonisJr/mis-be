@@ -1,4 +1,4 @@
-name: Release Please
+name: Release
 
 on:
   push:
@@ -9,12 +9,30 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
 
     steps:
-      - name: Release Please
-        uses: googleapis/release-please-action@v4
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Generate Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.15.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-count: 0
+          skip-commit: 'true'
+          fallback-version: '1.0.0'
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: >
+            ${{ steps.changelog.outputs.tag }}${{ github.ref == 'refs/heads/staging' && '-beta' || '' }}
+          release_name: >
+            ${{ steps.changelog.outputs.tag }}${{ github.ref == 'refs/heads/staging' && '-beta' || '' }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          draft: false
+          prerelease: ${{ github.ref == 'refs/heads/staging' }}
