@@ -1,0 +1,15 @@
+{
+  "branches": [
+    {
+      "branch": "staging",
+      "release-type": "simple",
+      "prerelease": true,
+      "versioning-strategy": "semver"
+    },
+    {
+      "branch": "main",
+      "release-type": "simple",
+      "versioning-strategy": "semver"
+    }
+  ]
+}
