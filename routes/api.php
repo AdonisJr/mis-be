@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SchoolYearController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,15 +24,24 @@ Route::prefix('mis')->group(function () {
             Route::get('/user', function (Request $request) {
                 return $request->user();
             });
+
+            // School year
+            Route::get('/school-year', [SchoolYearController::class, 'index']);
+            Route::post('/school-year', [SchoolYearController::class, 'create']);
+            Route::put('/school-year/{id}', [SchoolYearController::class, 'update']);
+            Route::delete('/school-year/{id}', [SchoolYearController::class, 'delete']);
+            Route::put('/school-year/set-active/{id}', [SchoolYearController::class, 'setActiveSchoolYear']);
+            Route::get('/school-year/get-active', [SchoolYearController::class, 'getActiveSchoolYear']);
         });
 
+        // high school students
         Route::middleware(['role:high_school'])->group(function () {
             Route::get('/userst', function (Request $request) {
                 return $request->user();
             });
         });
 
-        // role for college
+        // college students
         Route::middleware(['role:college'])->group(function () {
             Route::get('/usersCollege', function (Request $request) {
                 return $request->user();
