@@ -1,0 +1,289 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APIs For SRPHS",
+        "description": "API documentation for SRPHS Management Information System",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/mis/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "operationId": "fbf8a4c0650d284ca694668a490db297",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/mis/school-years": {
+            "get": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Get all school years",
+                "operationId": "ce7d06b8f0ef040f4e4951feb1d71c47",
+                "responses": {
+                    "200": {
+                        "description": "List of all school years"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Create a new school year",
+                "operationId": "022e3aa12fd1ef8e4c756612dc550952",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "2025-2026"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-01"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-03-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "School year created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/mis/school-years/{id}": {
+            "put": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Update a specific school year",
+                "operationId": "3f121183183e7eb3519540308c020dfd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "2025-2026"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-06-01"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-03-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "School year updated successfully"
+                    },
+                    "404": {
+                        "description": "School year not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Delete a school year",
+                "operationId": "d251ff5d1829bfc166fd902db68d380d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "School year deleted successfully"
+                    },
+                    "404": {
+                        "description": "School year not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/mis/school-years/set-active/{id}": {
+            "patch": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Set a school year as active",
+                "operationId": "9dc56d676e90bf28d4ac46f98384d253",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Active school year set successfully"
+                    },
+                    "404": {
+                        "description": "School year not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/mis/school-years/get-active": {
+            "get": {
+                "tags": [
+                    "School Year"
+                ],
+                "summary": "Get the currently active school year",
+                "operationId": "e16ea0397bf33532c1ed18883f525bff",
+                "responses": {
+                    "200": {
+                        "description": "Active school year data"
+                    },
+                    "404": {
+                        "description": "No active school year found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "School Year",
+            "description": "School Year"
+        }
+    ]
+}

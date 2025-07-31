@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SchoolYearController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,12 +27,12 @@ Route::prefix('mis')->group(function () {
             });
 
             // School year
-            Route::get('/school-year', [SchoolYearController::class, 'index']);
-            Route::post('/school-year', [SchoolYearController::class, 'create']);
-            Route::put('/school-year/{id}', [SchoolYearController::class, 'update']);
-            Route::delete('/school-year/{id}', [SchoolYearController::class, 'delete']);
-            Route::put('/school-year/set-active/{id}', [SchoolYearController::class, 'setActiveSchoolYear']);
-            Route::get('/school-year/get-active', [SchoolYearController::class, 'getActiveSchoolYear']);
+            Route::get('/school-years', [SchoolYearController::class, 'index']);
+            Route::post('/school-years', [SchoolYearController::class, 'create']);
+            Route::put('/school-years/{id}', [SchoolYearController::class, 'update']);
+            Route::delete('/school-years/{id}', [SchoolYearController::class, 'delete']);
+            Route::put('/school-years/set-active/{id}', [SchoolYearController::class, 'setActiveSchoolYear']);
+            Route::get('/school-years/get-active', [SchoolYearController::class, 'getActiveSchoolYear']);
         });
 
         // high school students
@@ -53,3 +54,7 @@ Route::prefix('mis')->group(function () {
         });
     });
 });
+
+//Route for Document API
+
+Route::get('/home',[DocumentController::class,'index']);
