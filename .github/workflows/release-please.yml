@@ -1,0 +1,22 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v4
+        with:
+          release-type: simple
+          default-branch: ${{ github.ref == 'refs/heads/main' && 'main' || 'staging' }}
+          prerelease: ${{ github.ref == 'refs/heads/staging' }}
