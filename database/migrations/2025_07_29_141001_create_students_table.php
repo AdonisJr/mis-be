@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('contact');
             $table->string('parent_contact');
             $table->enum('role', ['high_school', 'college'])->default('high_school');
+            $table->string('rfid')->nullable();
             $table->string('address')->nullable();
             $table->string('password'); // Password field
             $table->string('email')->unique();

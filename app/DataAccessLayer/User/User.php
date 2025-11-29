@@ -16,6 +16,7 @@ class User
 {
 
     protected $helper;
+
     public function __construct(Helper $helper)
     {
         $this->helper = $helper;
