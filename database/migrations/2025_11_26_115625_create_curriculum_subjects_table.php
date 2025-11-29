@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('school_years', function (Blueprint $table) {
+        Schema::create('curriculum_subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('start_date');
-            $table->string('end_date');
-            $table->string('description');
-            $table->boolean('active')->default(false);
+            $table->foreignId('curriculum_id')->nullable()->constrained('curricula')->nullOnDelete();
+            $table->foreignId('subject_id')->nullable()->constrained('subjects')->nullOnDelete();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('school_years');
+        Schema::dropIfExists('curriculum_subjects');
     }
 };

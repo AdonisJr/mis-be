@@ -16,6 +16,7 @@ class User
 {
 
     protected $helper;
+
     public function __construct(Helper $helper)
     {
         $this->helper = $helper;
@@ -64,5 +65,14 @@ class User
 
             return response()->json(['statuscode' => 500, 'status' => 'failed', 'message' => $th->getMessage()]);
         }
+    }
+
+    public function getCurrentUser($request)
+    {
+        $user = auth('mis')->user();
+
+        Log::info('Retrieving current user info: ' . $user);
+
+        return response()->json(['statuscode' => 200, 'status' => 'success', 'message' => 'Current user retrieved successfully.', 'user' => $user], 200);
     }
 }
