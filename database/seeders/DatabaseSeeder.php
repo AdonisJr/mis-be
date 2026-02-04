@@ -30,11 +30,35 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Student::create([
-            'name' => 'John Doe',
+            'first_name' => 'John',
+            'middle_name' => null,
+            'last_name' => 'Doe',
             'email' => 'student@gmail.com',
             'gender' => 'male',
             'contact' => '123456',
             'parent_contact' => '123456',
+            'password' =>  Hash::make('123'),
+        ]);
+        
+        Student::create([
+            'first_name' => 'Adonis',
+            'middle_name' => null,
+            'last_name' => 'Suico',
+            'email' => 'adon@gmail.com',
+            'gender' => 'male',
+            'contact' => '123456',
+            'parent_contact' => '09121793542',
+            'password' =>  Hash::make('123'),
+        ]);
+
+        Student::create([
+            'first_name' => 'Richmond',
+            'middle_name' => null,
+            'last_name' => 'Jabla',
+            'email' => 'jabla@gmail.com',
+            'gender' => 'male',
+            'contact' => '09111225458',
+            'parent_contact' => '09754882167',
             'password' =>  Hash::make('123'),
         ]);
 

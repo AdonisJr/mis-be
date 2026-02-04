@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AssignRfid;
 use App\Http\Controllers\Controller;
-use App\Models\Student;
+use App\DataAccessLayer\Student\Student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StudentFormRequest;
 
 class StudentController extends Controller
 {
@@ -20,57 +20,22 @@ class StudentController extends Controller
 
     public function index()
     {
-        return Student::all();
-    }
-    
-
-    public function scanRfid(Request $request)
-    {
-        $uid = $request->input('rfid');
-
-        // Check if any student is waiting for scan
-        $studentId = Cache::get('student_waiting_for_scan');
-
-        if (!$studentId) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No student listening'
-            ]);
-        }
-
-        event(new AssignRfid());
-
-        $student = Student::find($studentId);
-        if (!$student) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Student not found'
-            ]);
-        }
-
-        // Save RFID to student
-        $student->rfid = $uid;
-        $student->save();
-
-        // Clear the listener
-        Cache::forget('student_waiting_for_scan');
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'RFID saved',
-            'student' => $student
-        ]);
+        $id = Auth::user()->id; // sample to get current user id
+        // return Student::where('id', '!=', $id )->get();
+        return $this->student->getAllStudents();
     }
 
-    // Called by Admin
-    public function requestRfidScan($studentId)
+    public function updateStudent($id, StudentFormRequest $request)
     {
-        // Set listener for this student, expires after 30 seconds
-        Cache::put('student_waiting_for_scan', $studentId, 30);
+        return $this->student->updateStudent($id, $request);
+    }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Ready to scan RFID'
+    public function updateStudentRfid($id, Request $request)
+    {
+        $validated = $request->validate([
+            'rfid' => 'required|string|max:255',
         ]);
+
+        return $this->student->studentRfidUpdate($id, $validated['rfid']);
     }
 }

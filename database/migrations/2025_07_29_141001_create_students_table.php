@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
             $table->string('birth_date')->nullable();
             $table->string('gender')->nullable();
             $table->string('contact');
             $table->string('parent_contact');
-            $table->enum('role', ['high_school', 'college'])->default('high_school');
+            $table->enum('role', ['high_school', 'seinor_high_school', 'college'])->default('high_school');
             $table->string('rfid')->nullable();
             $table->string('address')->nullable();
             $table->string('password'); // Password field
