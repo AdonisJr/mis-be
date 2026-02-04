@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StudentFormRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StudentFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,5 +26,31 @@ class StudentFormRequest extends FormRequest
         return [
             //
         ];
+    }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'The school year name is required.',
+            'name.unique' => 'The school year already exist.'
+        ];
+    }
+
+    /**
+     * Handle a failed validation attempt
+     *
+     * @param
+     * @return void
+
+     * @throws
+     */
+
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'failed',
+            'statuscode' => 422,
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

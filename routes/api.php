@@ -50,6 +50,8 @@ Route::prefix('mis')->group(function () {
 
             // students
             Route::get('/students', [StudentController::class, 'index']);
+            Route::get('/students/{id}', [StudentController::class, 'updateStudent']);
+            Route::put('/students/rfid/{id}', [StudentController::class, 'updateStudentRfid']);
 
             // User
             Route::get('/getCurrentUserInfo', [UserController::class, 'getCurrentUserInfo']);
