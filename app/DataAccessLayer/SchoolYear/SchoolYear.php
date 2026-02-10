@@ -110,26 +110,37 @@ class SchoolYear
         DB::beginTransaction();
 
         try {
+            // Set all to inactive
+            SchoolYears::query()->update(['active' => false]);
 
+            // Activate selected school year
             $schoolYear = SchoolYears::findOrFail($id);
-
-            // update all to false
-            SchoolYears::where('active', true)->update(['active' => false]);
-
             $schoolYear->update(['active' => true]);
 
             DB::commit();
 
-            return response()->json(['statuscode' => 200, 'status' => 'success', 'message' => 'School year updated.', 'data' => $schoolYear], 200);
+            return response()->json([
+                'statuscode' => 200,
+                'status' => 'success',
+                'message' => 'School year updated.',
+                'data' => $schoolYear
+            ]);
         } catch (\Throwable $th) {
-
             DB::rollBack();
 
-            Log::error('Error during user registration', ['error' => $th->getMessage(), 'trace' => $th->getTraceAsString()]);
+            Log::error('Error setting active school year', [
+                'error' => $th->getMessage(),
+                'trace' => $th->getTraceAsString()
+            ]);
 
-            return response()->json(['statuscode' => 500, 'status' => 'failed', 'message' => $th->getMessage()]);
+            return response()->json([
+                'statuscode' => 500,
+                'status' => 'failed',
+                'message' => 'Unable to update school year.'
+            ], 500);
         }
     }
+
 
     public function getActiveSchoolYear()
     {

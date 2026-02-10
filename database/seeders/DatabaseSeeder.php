@@ -28,6 +28,22 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'contact' => '09773942290'
         ]);
+        
+        User::create([
+            'name' => 'Test User',
+            'email' => 'cashier@gmail.com',
+            'password' => '123',
+            'role' => 'cashier',
+            'contact' => '09773942290'
+        ]);
+
+        User::create([
+            'name' => 'Test User',
+            'email' => 'registrar@gmail.com',
+            'password' => '123',
+            'role' => 'registrar',
+            'contact' => '09773942290'
+        ]);
 
         Student::create([
             'first_name' => 'John',
